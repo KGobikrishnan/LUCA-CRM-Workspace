@@ -1,0 +1,393 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS — Light & Dark
+───────────────────────────────────────────── */
+:root {
+  /* Warm Milk White Design System */
+  --bg-main:        #faf8f5;  /* Soft Warm Milk White for all backgrounds */
+  --bg-card:        rgba(255, 255, 255, 0.95);
+  --bg-card-solid:  #ffffff;  /* Pure white for card contrast */
+  --bg-sidebar:     #ffffff;  /* Completely white sidebar */
+  --bg-topbar:      #ffffff;  /* Completely white top panel */
+  --bg-input:       #ffffff;
+  --bg-hover:       #faf8f5;  /* Soft warm milk white hover accent */
+
+  /* Contrast Typography */
+  --text-main:      #000000;  /* Deep solid black for primary text */
+  --text-sub:       #18181b;  /* Dark zinc for subtitles */
+  --text-muted:     #4b5563;  /* Medium gray for secondary text */
+  --text-faint:     #787880;  /* Captions & secondary tags */
+
+  /* Borders & Grids */
+  --border:         #eae3d2;  /* Soft creamy warm border */
+  --border-strong:  #cbd5e1;
+
+  /* Indigo & Gold Theme Accents */
+  --indigo-primary: #4f46e5;  /* Rich Indigo Blue */
+  --gold-accent:    #cda250;  /* Premium Luxury Gold */
+
+  /* Frosted Glass - Light Mode */
+  --glass-blur:     blur(16px);
+  --glass-bg:       rgba(255, 255, 255, 0.85);
+  --glass-border:   rgba(205, 162, 80, 0.25); /* Subtle Gold border outline */
+  --glass-shadow:   0 8px 32px rgba(79, 70, 229, 0.03); /* Subtle Indigo shadow */
+}
+
+/* ─────────────────────────────────────────────
+   HIGH-CONTRAST MILK WHITE, INDIGO & GOLD LIGHT MODE OVERRIDES
+───────────────────────────────────────────── */
+:root:not(.dark) .text-slate-900,
+:root:not(.dark) .text-slate-800,
+:root:not(.dark) .text-gray-900,
+:root:not(.dark) .text-gray-800,
+:root:not(.dark) .text-zinc-900,
+:root:not(.dark) .text-zinc-800 {
+  color: #000000 !important;
+}
+
+:root:not(.dark) .text-slate-700,
+:root:not(.dark) .text-gray-700,
+:root:not(.dark) .text-zinc-700 {
+  color: #18181b !important;
+}
+
+:root:not(.dark) .text-slate-600,
+:root:not(.dark) .text-gray-600,
+:root:not(.dark) .text-zinc-600 {
+  color: #3f3f46 !important;
+}
+
+/* Make body background have the gorgeous Warm Milk White */
+:root:not(.dark) body {
+  background-color: #faf8f5 !important;
+}
+
+/* Map standard gray background layers to Milk White */
+:root:not(.dark) .bg-slate-50,
+:root:not(.dark) .bg-gray-50,
+:root:not(.dark) .bg-zinc-50 {
+  background-color: #fcfaf7 !important;
+}
+
+/* Map card grid borders to soft creamy gold */
+:root:not(.dark) .border-slate-100,
+:root:not(.dark) .border-gray-100,
+:root:not(.dark) .border-zinc-100 {
+  border-color: #eae3d2 !important;
+}
+
+:root:not(.dark) .border-slate-200,
+:root:not(.dark) .border-gray-200,
+:root:not(.dark) .border-zinc-200 {
+  border-color: #cbd5e1 !important;
+}
+
+/* Map hardcoded dark cards to Royal Indigo Blue in light mode */
+:root:not(.dark) .bg-slate-900,
+:root:not(.dark) .bg-slate-950 {
+  background-color: #4f46e5 !important; /* Premium Indigo background */
+  border-color: rgba(205, 162, 80, 0.4) !important; /* Gold border stroke */
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.3) !important;
+}
+
+/* Map active NavLink states in Light Mode */
+:root:not(.dark) .bg-indigo-50 {
+  background-color: rgba(79, 70, 229, 0.08) !important; /* Indigo Blue tint */
+  border-left: 3px solid #cda250 !important; /* Luxury Gold vertical bar */
+  box-shadow: 0 0 0 1px rgba(205, 162, 80, 0.15) !important;
+  border-radius: 0.75rem;
+}
+:root:not(.dark) .text-indigo-700 {
+  color: #4f46e5 !important; /* Deep Indigo text */
+}
+
+/* Ensure glass component background is white glass instead of slate gray */
+:root:not(.dark) .glass {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(205, 162, 80, 0.25) !important;
+  box-shadow: 0 8px 32px rgba(79, 70, 229, 0.03) !important;
+}
+
+/* Custom premium light mode layout overrides */
+:root:not(.dark) .from-slate-900 {
+  --tw-gradient-from: #1e1b4b !important; /* Deep Luxury Royal Indigo */
+  --tw-gradient-to: #3730a3 !important;
+}
+:root:not(.dark) .to-slate-800 {
+  --tw-gradient-to: #4338ca !important;
+}
+:root:not(.dark) .border-slate-700 {
+  border-color: rgba(205, 162, 80, 0.35) !important; /* Gold border stroke */
+}
+:root:not(.dark) .border-slate-900 {
+  border-color: #3730a3 !important;
+}
+:root:not(.dark) .bg-slate-800 {
+  background-color: #312e81 !important; /* Rich deep indigo for dark-themed sub-elements */
+}
+:root:not(.dark) aside a:not(.bg-indigo-50):hover {
+  background-color: #f0eae0 !important; /* Soft warm cream hover */
+  color: #000000 !important;
+}
+:root:not(.dark) input:focus,
+:root:not(.dark) select:focus,
+:root:not(.dark) textarea:focus {
+  border-color: #cda250 !important; /* Gold focus border stroke */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important; /* Indigo glowing shadow */
+}
+:root:not(.dark) .bg-black\/20 {
+  background-color: rgba(0, 0, 0, 0.12) !important; /* Soft transparent overlay on deep colors */
+}
+:root:not(.dark) .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+
+
+
+.dark {
+  /* Backgrounds */
+  --bg-main:        #060d1a;
+  --bg-card:        rgba(15, 23, 42, 0.80);
+  --bg-card-solid:  #0f172a;
+  --bg-sidebar:     rgba(10, 17, 35, 0.90);
+  --bg-topbar:      rgba(10, 17, 35, 0.85);
+  --bg-input:       rgba(30, 41, 59, 0.60);
+  --bg-hover:       rgba(30, 41, 59, 0.50);
+
+  /* Text */
+  --text-main:      #f1f5f9;
+  --text-sub:       #cbd5e1;
+  --text-muted:     #94a3b8;
+  --text-faint:     #64748b;
+
+  /* Borders */
+  --border:         rgba(51, 65, 85, 0.60);
+  --border-strong:  #334155;
+
+  /* Glass */
+  --glass-bg:       rgba(15, 23, 42, 0.70);
+  --glass-border:   rgba(51, 65, 85, 0.50);
+  --glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.40);
+}
+
+/* ─────────────────────────────────────────────
+   BASE RESET
+───────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply antialiased;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    overscroll-behavior: none;
+    transition: background-color 0.3s ease, color 0.2s ease;
+  }
+
+  /* Remove tap highlight on interactive elements (native-app feel) */
+  button, a, select, input, textarea, label {
+    -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+  }
+
+  /* Default heading weights */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  p, span, li {
+    color: inherit;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   GLASS UTILITY CLASSES
+───────────────────────────────────────────── */
+@layer components {
+  /* Primary glass card */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Subtle glass (for inner panels) */
+  .glass-sm {
+    background: rgba(255, 255, 255, 0.40);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.30);
+  }
+  .dark .glass-sm {
+    background: rgba(15, 23, 42, 0.50);
+    border-color: rgba(51, 65, 85, 0.40);
+  }
+
+  /* Card — theme-aware solid */
+  .card {
+    background: var(--bg-card-solid);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.02);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease;
+  }
+  .dark .card {
+    background: #111827;
+    border-color: rgba(51, 65, 85, 0.70);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.30);
+  }
+
+  /* Input — theme-aware */
+  .input-field {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    transition: all 0.2s ease;
+  }
+  .input-field::placeholder {
+    color: var(--text-faint);
+  }
+  .input-field:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   UTILITY EXTENSIONS
+───────────────────────────────────────────── */
+@layer utilities {
+  /* Theme-aware text helpers */
+  .text-theme-main  { color: var(--text-main); }
+  .text-theme-sub   { color: var(--text-sub); }
+  .text-theme-muted { color: var(--text-muted); }
+  .text-theme-faint { color: var(--text-faint); }
+
+  /* Theme-aware background helpers */
+  .bg-theme-main { background-color: var(--bg-main); }
+  .bg-theme-card { background-color: var(--bg-card-solid); }
+
+  /* ── Scrollbars ── */
+  .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.40);
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.70);
+  }
+
+  /* Hide scrollbar — mobile */
+  .mobile-scroll::-webkit-scrollbar { display: none; }
+  .mobile-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Safe area for iPhone bottom bar */
+  .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .safe-area-top    { padding-top: env(safe-area-inset-top, 0px); }
+
+  /* Gradient border trick */
+  .gradient-border {
+    position: relative;
+    border-radius: 1rem;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .gradient-border:hover::before { opacity: 1; }
+
+  /* Shimmer animation for progress bars */
+  @keyframes shimmer {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+  }
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background-size: 200% 100%;
+  }
+
+  /* Pulse ring */
+  @keyframes pulse-ring {
+    0%   { transform: scale(0.9); opacity: 0.8; }
+    70%  { transform: scale(1.1); opacity: 0; }
+    100% { transform: scale(0.9); opacity: 0; }
+  }
+
+  /* Slide down animation for filter panel */
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); max-height: 0; }
+    to   { opacity: 1; transform: translateY(0); max-height: 400px; }
+  }
+  @keyframes slideUp {
+    from { opacity: 1; transform: translateY(0); max-height: 400px; }
+    to   { opacity: 0; transform: translateY(-8px); max-height: 0; }
+  }
+  .animate-slide-down {
+    animation: slideDown 0.25s ease forwards;
+    overflow: hidden;
+  }
+  .animate-slide-up {
+    animation: slideUp 0.25s ease forwards;
+    overflow: hidden;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   MOBILE OVERRIDES
+───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Modal full-width on mobile */
+  .fixed.inset-0.z-50 > div {
+    max-height: 95vh;
+    margin: auto 0.5rem;
+    border-radius: 1rem;
+  }
+}
+
+/* Override table display to allow horizontal scroll on mobile */
+@media (max-width: 1024px) {
+  .table-scroll-wrap {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .table-scroll-wrap::-webkit-scrollbar { display: none; }
+  .table-scroll-wrap table {
+    min-width: 600px;
+    width: 100%;
+  }
+}

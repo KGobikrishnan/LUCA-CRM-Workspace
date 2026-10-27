@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: workspace
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/navidb}
+    username: ${SPRING_DATASOURCE_USERNAME:navi_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:NaviPassword123}
+    driver-class-name: org.postgresql.Driver
+    # HikariCP — connection pool for 100+ concurrent users
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: NaviHikariPool
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        # Batch inserts for faster bulk writes
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+
+server:
+  port: 8080
+  # Enable HTTP/2 for multiplexed connections
+  http2:
+    enabled: true
+  # Response compression — reduces bandwidth usage under load
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+    min-response-size: 1024
+  # Increase Tomcat thread pool for concurrent traffic
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 20
+    accept-count: 100
+    connection-timeout: 20000
+
+app:
+  jwt:
+    secret: ${APP_JWT_SECRET:5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437}
+    expiration: ${APP_JWT_EXPIRATION:900000} # 15 minutes in ms
+    refresh-expiration: ${APP_JWT_REFRESH_EXPIRATION:604800000} # 7 days in ms
+

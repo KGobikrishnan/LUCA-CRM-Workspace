@@ -1,0 +1,63 @@
+services:
+  # 1. PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: workspace-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: navidb
+      POSTGRES_USER: navi_user
+      POSTGRES_PASSWORD: NaviPassword123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Uncomment if you have a local backup.sql file to seed the database:
+      # - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql:ro
+    networks:
+      - workspace-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U navi_user -d navidb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Spring Boot Backend (Java 21)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: workspace-backend
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/navidb
+      SPRING_DATASOURCE_USERNAME: navi_user
+      SPRING_DATASOURCE_PASSWORD: NaviPassword123
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - workspace-network
+
+  # 3. React 18 + Vite Frontend (Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: workspace-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - workspace-network
+
+networks:
+  workspace-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
